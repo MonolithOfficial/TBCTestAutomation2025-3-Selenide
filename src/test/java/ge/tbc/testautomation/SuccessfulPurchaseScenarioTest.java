@@ -1,6 +1,8 @@
 package ge.tbc.testautomation;
 
 import com.codeborne.selenide.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
@@ -18,27 +21,35 @@ import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.*;
 import static ge.tbc.testautomation.Constants.*;
+import static ge.tbc.testautomation.Util.CustomCondition.textOfLength;
 
 @Test(groups = {"E2E - successful product purchase - SCRUM-T18"})
 public class SuccessfulPurchaseScenarioTest {
+//    WebDriver driver;
 
+    private static final Logger logger = LogManager.getLogger();
     @BeforeClass
-    public void setUp(){
-        ChromeOptions options = new ChromeOptions();
+    @Parameters("browserType")
+    public void setUp(String browserType){
+        if (browserType.equalsIgnoreCase("chrome")){
+            logger.info("Configuring {} browser for test automation.", browserType);
+            ChromeOptions options = new ChromeOptions();
 
-        Map<String, Object> prefs = new HashMap<>();
+            Map<String, Object> prefs = new HashMap<>();
 
-        // Turn off Chrome password manager UI
-        prefs.put("credentials_enable_service", false);
-        prefs.put("profile.password_manager_enabled", false);
+            prefs.put("credentials_enable_service", false);
+            prefs.put("profile.password_manager_enabled", false);
 
-        options.setExperimentalOption("prefs", prefs);
-        options.addArguments("--disable-save-password-bubble");
-        options.addArguments("--disable-notifications");
-        options.addArguments("--disable-infobars");
-        options.addArguments("--incognito");
-        WebDriverRunner.setWebDriver(new ChromeDriver(options));
-        Configuration.browser = "chrome";
+            options.setExperimentalOption("prefs", prefs);
+            options.addArguments("--disable-save-password-bubble");
+            options.addArguments("--disable-notifications");
+            options.addArguments("--disable-infobars");
+            options.addArguments("--incognito");
+            WebDriverRunner.setWebDriver(new ChromeDriver(options));
+            Configuration.browser = "chrome";
+        } else if (browserType.equalsIgnoreCase("firefox")) {
+            Configuration.browser = "firefox";
+        }
         Configuration.timeout = 8000;
 //        Configuration.holdBrowserOpen = true;
         open("https://www.saucedemo.com/");
@@ -85,6 +96,7 @@ public class SuccessfulPurchaseScenarioTest {
 
         SelenideElement checkoutPageLabel = $("span.title");
         checkoutPageLabel.shouldHave(Condition.text(CHECKOUT_LABEL));
+        checkoutPageLabel.shouldHave(textOfLength(10));
     }
 
     @Test(description = "Enter checkout information", priority = 5)
