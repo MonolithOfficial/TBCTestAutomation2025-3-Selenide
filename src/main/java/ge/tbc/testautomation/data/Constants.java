@@ -1,4 +1,4 @@
-package ge.tbc.testautomation;
+package ge.tbc.testautomation.data;
 
 public class Constants {
     public static final String STANDARD_USER = "standard_user";
