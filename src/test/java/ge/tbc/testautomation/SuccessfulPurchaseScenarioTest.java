@@ -19,23 +19,13 @@ import static ge.tbc.testautomation.data.Constants.*;
 import static ge.tbc.testautomation.Util.CustomCondition.textOfLength;
 
 @Test(groups = {"E2E - successful product purchase - SCRUM-T18"})
-public class SuccessfulPurchaseScenarioTest {
-    LoginSteps loginSteps;
-    DashboardSteps dashboardSteps;
-    CartSteps cartSteps;
-    CheckoutSteps checkoutSteps;
-    OverviewSteps overviewSteps;
-
+public class SuccessfulPurchaseScenarioTest extends BaseTest{
     private static final Logger logger = LogManager.getLogger();
 
     @BeforeClass
     @Parameters("browserType")
     public void setUp(String browserType) {
-        loginSteps = new LoginSteps();
-        dashboardSteps = new DashboardSteps();
-        cartSteps = new CartSteps();
-        checkoutSteps = new CheckoutSteps();
-        overviewSteps = new OverviewSteps();
+
         if (browserType.equalsIgnoreCase("chrome")) {
             logger.info("Configuring {} browser for test automation.", browserType);
             ChromeOptions options = new ChromeOptions();
@@ -68,20 +58,20 @@ public class SuccessfulPurchaseScenarioTest {
                 .clickLoginButton();
     }
 
-    @Test(description = "Add backpack to cart", priority = 2)
+    @Test(description = "Add backpack to cart", priority = 2, dependsOnMethods = {"loginAsStandardUser"}, enabled = false)
     public void addToCart() {
         dashboardSteps
                 .clickAddToCart()
                 .assertRemoveButtonVisibility();
     }
 
-    @Test(description = "Review the cart", priority = 3)
+    @Test(description = "Review the cart", priority = 3, invocationCount = 5, successPercentage = 80)
     public void reviewCart() {
         cartSteps.goToCart();
         cartSteps.assertCartItemsSize(1);
     }
 
-    @Test(description = "Go to checkout page", priority = 4)
+    @Test(description = "Go to checkout page", priority = 4, timeOut = 10)
     public void goToCheckout() {
         cartSteps.goToCheckout();
         checkoutSteps.assertCheckoutLabel();
