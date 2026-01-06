@@ -1,49 +1,43 @@
-package ge.tbc.testautomation;
+package ge.tbc.testautomation.tests;
 
-import com.codeborne.selenide.*;
-import org.testng.Assert;
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.File;
-import java.util.Objects;
-
-import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selectors.byTagName;
+import static com.codeborne.selenide.Selectors.withTagAndText;
 import static com.codeborne.selenide.Selenide.*;
 
-public class SelenideTests2 {
+public class SelenideTests {
     @BeforeClass
     public void setUp(){
+//        ChromeOptions options = new ChromeOptions()
+//                .setExperimentalOption(
+//                        "prefs",
+//                        Map.of(
+//                                "credentials_enable_service", false,
+//                                "profile.password_manager_enabled", false
+//                        )
+//                );
         Configuration.browser = "chrome";
         Configuration.timeout = 8000;
-        Configuration.holdBrowserOpen = true;
-        Configuration.downloadsFolder = System.getProperty("user.dir") + "/otherDownloadFolder";
+//        Configuration.holdBrowserOpen = true;
+        open("https://jqueryui.com/slider/");
     }
 
-    @Test
-    public void testFileUpload() {
-        open("https://the-internet.herokuapp.com/upload");
-        SelenideElement fileUploadInput = $(byId("file-upload"));
-        File ronaldoImage = new File(System.getProperty("user.dir") + "/src/main/resources/ronaldokneeslide.jpg");
-//        ClassLoader classLoader = this.getClass().getClassLoader();
-//        File ronaldoImage = new File(Objects.requireNonNull(classLoader.getResource("ronaldokneeslide.jpg")).getFile());
-        fileUploadInput.uploadFile(ronaldoImage);
-        SelenideElement submitBtn = $(byId("file-submit"));
-        submitBtn.click();
+    @Test(groups = {"selenide_test_cases"})
+    public void testChainedSelector() {
+        SelenideElement closestElement = $(withTagAndText("h3", "Interactions"))
+                .parent().closest("div"); // closest searches only up
+        System.out.println(closestElement.innerHtml());
     }
 
-    @Test
-    public void downloadFile(){
-        open("https://the-internet.herokuapp.com/download");
-        SelenideElement downloadLink = $("a[href='download/FileImage.png']");
-        File downloadedFile = downloadLink.download();
-        String absolutePath = downloadedFile.getAbsolutePath();
-        Assert.assertEquals(downloadedFile.getName(), "FileImage.png");
-    }
+    public void testFindFilter() {
+        open("https://www.telerik.com/support/demos");
 
-    @Test
-    public void filterTest(){
         // find (დააკვირდით, რომ find(WebElementCondition condition) მეთოდი წვდომადია ElementsCollection ობიექტებიდან მხოლოდ,
         // პარამეტრად იღებს WebElementCondition-ს, აბრუნებს SelenideElement).
         // როდის ვიყენებთ? - როდესაც გვაქვს კოლექცია და გვინდა იქიდან რამე ერთი ელემენტი ამოვიღოთ რაღაც კონდიციის საფუძველზე.

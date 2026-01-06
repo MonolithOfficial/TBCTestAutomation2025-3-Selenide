@@ -1,8 +1,6 @@
-package ge.tbc.testautomation;
+package ge.tbc.testautomation.tests;
 
 import ge.tbc.testautomation.steps.*;
-import org.testng.ITestContext;
-import org.testng.ITestNGMethod;
 import org.testng.annotations.*;
 
 import java.lang.reflect.Method;

@@ -1,24 +1,23 @@
-package ge.tbc.testautomation;
+package ge.tbc.testautomation.tests;
 
 import com.codeborne.selenide.*;
-import ge.tbc.testautomation.steps.*;
+import ge.tbc.testautomation.Util.CustomTestListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selenide.*;
-import static ge.tbc.testautomation.data.Constants.*;
-import static ge.tbc.testautomation.Util.CustomCondition.textOfLength;
 
-@Test(groups = {"E2E - successful product purchase - SCRUM-T18"})
+@Listeners({CustomTestListener.class})
+@Test(groups = {"E2E - successful product purchase - SCRUM-T18", "selenide_scenarios"})
 public class SuccessfulPurchaseScenarioTest extends BaseTest{
     private static final Logger logger = LogManager.getLogger();
 

@@ -5,24 +5,24 @@
 <!--BEFORE SUITE-->
 <suite name="crossBrowser" thread-count="2" parallel="tests">
 <!--    BEFORE TEST-->
-    <test name="firefoxTest">
-        <parameter name="browserType" value="firefox"/>
-        <classes>
-            <class name="ge.tbc.testautomation.SuccessfulPurchaseScenarioTest">
-<!--                <methods>-->
-<!--                BEFORE METHOD-->
-<!--                    <include name=""/> you can include a specific test method here-->
-<!--                AFTER METHOD-->
-<!--                </methods>-->
-            </class>
-        </classes>
-    </test>
+<!--    <test name="firefoxTest">-->
+<!--        <parameter name="browserType" value="firefox"/>-->
+<!--        <classes>-->
+<!--            <class name="ge.tbc.testautomation.tests.SuccessfulPurchaseScenarioTest">-->
+<!--&lt;!&ndash;                <methods>&ndash;&gt;-->
+<!--&lt;!&ndash;                BEFORE METHOD&ndash;&gt;-->
+<!--&lt;!&ndash;                    <include name=""/> you can include a specific test method here&ndash;&gt;-->
+<!--&lt;!&ndash;                AFTER METHOD&ndash;&gt;-->
+<!--&lt;!&ndash;                </methods>&ndash;&gt;-->
+<!--            </class>-->
+<!--        </classes>-->
+<!--    </test>-->
 
     <!--    BEFORE TEST-->
     <test name="chromeTest">
         <parameter name="browserType" value="chrome"/>
         <classes>
-            <class name="ge.tbc.testautomation.SuccessfulPurchaseScenarioTest"/>
+            <class name="ge.tbc.testautomation.tests.SuccessfulPurchaseScenarioTest"/>
         </classes>
     </test>
 </suite>

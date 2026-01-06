@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Groups Suite">
+    <parameter name="browserType" value="chrome"/>
+    <test name="Groups Test">
+
+        <groups>
+            <define name="test_cases_and_scenarios">
+                <include name="selenide_test_cases"/>
+                <include name="selenide_scenarios"/>
+            </define>
+            <define name="selenide_test_cases"/>
+            <define name="selenide_scenarios"/>
+            <run>
+                <include name="test_cases_and_scenarios"/>
+                <exclude name="ignored_cases"></exclude>
+            </run>
+        </groups>
+        <packages>
+            <package name="ge.tbc.testautomation.tests"/>
+        </packages>
+    </test>
+
+</suite>
