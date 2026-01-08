@@ -3,7 +3,7 @@ package ge.tbc.testautomation.steps;
 import ge.tbc.testautomation.data.Constants;
 import ge.tbc.testautomation.pages.LoginPage;
 
-public class LoginSteps {
+public class LoginSteps extends CommonSteps{
     LoginPage loginPage = new LoginPage();
 
     public LoginSteps fillUserNameInput(){
@@ -12,8 +12,20 @@ public class LoginSteps {
         return this;
     }
 
+    public LoginSteps fillUserNameInput(String username){
+        loginPage.usernameInput.sendKeys(username);
+
+        return this;
+    }
+
     public LoginSteps fillPasswordInput(){
         loginPage.passwordInput.sendKeys(Constants.PASSWORD);
+
+        return this;
+    }
+
+    public LoginSteps fillPasswordInput(String password){
+        loginPage.passwordInput.sendKeys(password);
 
         return this;
     }

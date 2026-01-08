@@ -10,4 +10,11 @@ public class CommonSteps {
 
         return this;
     }
+
+    public CommonSteps logout(){
+        commonPage.burgerIcon.click();
+        commonPage.logoutBtn.click();
+
+        return this;
+    }
 }

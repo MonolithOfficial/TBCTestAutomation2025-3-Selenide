@@ -4,22 +4,25 @@ import com.codeborne.selenide.*;
 import ge.tbc.testautomation.Util.CustomTestListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.*;
 
-@Listeners({CustomTestListener.class})
+//@Listeners({CustomTestListener.class})
 @Test(groups = {"E2E - successful product purchase - SCRUM-T18", "selenide_scenarios"})
 public class SuccessfulPurchaseScenarioTest extends BaseTest{
     private static final Logger logger = LogManager.getLogger();
+    String username;
+    String password;
+
+    public SuccessfulPurchaseScenarioTest(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
 
     @BeforeClass
     @Parameters("browserType")
@@ -39,7 +42,8 @@ public class SuccessfulPurchaseScenarioTest extends BaseTest{
             options.addArguments("--disable-notifications");
             options.addArguments("--disable-infobars");
             options.addArguments("--incognito");
-            WebDriverRunner.setWebDriver(new ChromeDriver(options));
+
+            Configuration.browserCapabilities = options;
             Configuration.browser = "chrome";
         } else if (browserType.equalsIgnoreCase("firefox")) {
             Configuration.browser = "firefox";
@@ -52,25 +56,25 @@ public class SuccessfulPurchaseScenarioTest extends BaseTest{
     @Test(description = "Login as standard user", priority = 1)
     public void loginAsStandardUser() {
         loginSteps
-                .fillUserNameInput()
-                .fillPasswordInput()
+                .fillUserNameInput(username)
+                .fillPasswordInput(password)
                 .clickLoginButton();
     }
 
-    @Test(description = "Add backpack to cart", priority = 2, dependsOnMethods = {"loginAsStandardUser"}, enabled = false)
+    @Test(description = "Add backpack to cart", priority = 2)
     public void addToCart() {
         dashboardSteps
                 .clickAddToCart()
                 .assertRemoveButtonVisibility();
     }
 
-    @Test(description = "Review the cart", priority = 3, invocationCount = 5, successPercentage = 80)
+    @Test(description = "Review the cart", priority = 3)
     public void reviewCart() {
         cartSteps.goToCart();
         cartSteps.assertCartItemsSize(1);
     }
 
-    @Test(description = "Go to checkout page", priority = 4, timeOut = 10)
+    @Test(description = "Go to checkout page", priority = 4)
     public void goToCheckout() {
         cartSteps.goToCheckout();
         checkoutSteps.assertCheckoutLabel();
@@ -94,5 +98,10 @@ public class SuccessfulPurchaseScenarioTest extends BaseTest{
         overviewSteps
                 .finishOrder()
                 .assertSuccessMessage();
+    }
+
+    @AfterClass
+    public void tearDown(){
+        closeWebDriver();
     }
 }

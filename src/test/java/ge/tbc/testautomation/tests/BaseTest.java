@@ -25,7 +25,7 @@ public class BaseTest {
         System.out.println("Execution ended on " + LocalDateTime.now());
     }
 
-    @BeforeTest
+    @BeforeClass
     public void initializeSteps(){
         loginSteps = new LoginSteps();
         dashboardSteps = new DashboardSteps();
@@ -34,9 +34,9 @@ public class BaseTest {
         overviewSteps = new OverviewSteps();
     }
 
-    @AfterTest
+    @AfterClass
     public void afterTestFinish(){
-        System.out.println("Test tag execution finished on " + LocalDateTime.now());
+        System.out.println("Test class execution finished on " + LocalDateTime.now());
     }
 
     @BeforeMethod

@@ -3,7 +3,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <!--BEFORE SUITE-->
-<suite name="crossBrowser" thread-count="2" parallel="tests">
+<suite name="crossBrowser">
+<!--<suite name="crossBrowser" thread-count="2" parallel="tests">-->
 <!--    BEFORE TEST-->
 <!--    <test name="firefoxTest">-->
 <!--        <parameter name="browserType" value="firefox"/>-->
@@ -22,7 +23,7 @@
     <test name="chromeTest">
         <parameter name="browserType" value="chrome"/>
         <classes>
-            <class name="ge.tbc.testautomation.tests.SuccessfulPurchaseScenarioTest"/>
+            <class name="ge.tbc.testautomation.tests.SuccessfulPurchaseScenarioExecutor"/>
         </classes>
     </test>
 </suite>
